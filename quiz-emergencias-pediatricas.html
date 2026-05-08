@@ -1,0 +1,2156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Você está preparado para uma emergência com seu filho? | Quiz Pediátrico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #050508;
+    --surface: #0e0e14;
+    --surface-alt: #14141c;
+    --card: #111118;
+    --border: #1e1e2a;
+    --border-light: #2a2a3a;
+    --text: #eaeaf2;
+    --text-dim: #7a7a9a;
+    --text-muted: #44445a;
+    --accent: #4f8ef7;
+    --accent-dim: rgba(79,142,247,0.12);
+    --green: #22d06e;
+    --green-dim: rgba(34,208,110,0.12);
+    --red: #f74f6a;
+    --red-dim: rgba(247,79,106,0.12);
+    --amber: #f5a623;
+    --amber-dim: rgba(245,166,35,0.12);
+    --purple: #a855f7;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --radius: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Noise texture */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Glow orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.18;
+  }
+  .orb-1 { width: 500px; height: 500px; background: #f74f6a; top: -150px; right: -150px; }
+  .orb-2 { width: 400px; height: 400px; background: #4f8ef7; bottom: -100px; left: -100px; }
+
+  /* ===== HERO SECTION ===== */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--red-dim);
+    border: 1px solid rgba(247,79,106,0.3);
+    color: var(--red);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    font-family: var(--mono);
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 800px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .hero p {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: var(--text-dim);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--red);
+    font-family: var(--mono);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .btn-start {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--red);
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 18px 40px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 40px rgba(247,79,106,0.4);
+  }
+
+  .btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 60px rgba(247,79,106,0.6);
+  }
+
+  .btn-start svg { width: 20px; height: 20px; }
+
+  .hero-sub {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  /* ===== QUIZ SECTION ===== */
+  #quiz-section {
+    display: none;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 40px 24px 80px;
+  }
+
+  .quiz-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* Progress */
+  .progress-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .progress-label {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+  }
+
+  .progress-score {
+    font-size: 13px;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-weight: 600;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--border);
+    border-radius: 100px;
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--purple));
+    border-radius: 100px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* Question card */
+  .question-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.4s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .question-num {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-family: var(--mono);
+    margin-bottom: 16px;
+  }
+
+  .question-emoji {
+    font-size: 40px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .question-text {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 32px;
+    color: var(--text);
+  }
+
+  /* Options */
+  .options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 500;
+    width: 100%;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+    transform: translateX(4px);
+  }
+
+  .option-btn:disabled { cursor: not-allowed; }
+
+  .option-letter {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .option-btn.correct {
+    border-color: var(--green);
+    background: var(--green-dim);
+    animation: correctPulse 0.4s ease;
+  }
+
+  .option-btn.correct .option-letter {
+    background: var(--green);
+    color: #000;
+  }
+
+  .option-btn.wrong {
+    border-color: var(--red);
+    background: var(--red-dim);
+    animation: wrongShake 0.4s ease;
+  }
+
+  .option-btn.wrong .option-letter {
+    background: var(--red);
+    color: white;
+  }
+
+  @keyframes correctPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+
+  /* Feedback */
+  .feedback-box {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    animation: fadeUp 0.3s ease;
+    display: none;
+  }
+
+  .feedback-box.correct {
+    background: var(--green-dim);
+    border: 1px solid rgba(34,208,110,0.3);
+    color: var(--green);
+  }
+
+  .feedback-box.wrong {
+    background: var(--red-dim);
+    border: 1px solid rgba(247,79,106,0.3);
+    color: #fca5a5;
+  }
+
+  .feedback-title {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-next {
+    display: none;
+    width: 100%;
+    margin-top: 16px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--sans);
+  }
+
+  .btn-next:hover { background: #3a7ef0; }
+
+  /* Mini chart */
+  .live-chart {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .chart-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: var(--mono);
+    margin-bottom: 16px;
+  }
+
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 80px;
+  }
+
+  .chart-bar-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .chart-bar {
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    transition: height 0.5s cubic-bezier(0.4,0,0.2,1);
+    min-height: 4px;
+  }
+
+  .chart-bar-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    white-space: nowrap;
+  }
+
+  .chart-info {
+    margin-top: 12px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .chart-legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  /* ===== RESULT SECTION ===== */
+  #result-section {
+    display: none;
+    position: relative;
+    z-index: 1;
+    padding: 60px 24px 80px;
+  }
+
+  .result-container {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .result-emoji {
+    font-size: 72px;
+    margin-bottom: 24px;
+    display: block;
+    animation: bounceIn 0.6s ease;
+  }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .result-score-display {
+    font-size: clamp(64px, 12vw, 100px);
+    font-weight: 700;
+    font-family: var(--mono);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .result-score-max {
+    font-size: 20px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    margin-bottom: 32px;
+  }
+
+  .result-title {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .result-message {
+    font-size: 16px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 auto 48px;
+  }
+
+  /* Donut chart */
+  .donut-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+
+  .donut-svg { transform: rotate(-90deg); }
+
+  .donut-track { fill: none; stroke: var(--border); stroke-width: 16; }
+
+  .donut-fill {
+    fill: none;
+    stroke-width: 16;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1);
+    stroke-dashoffset: 502.65; /* full circle = 2*PI*80 */
+    stroke-dasharray: 502.65;
+  }
+
+  .donut-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .donut-center-val {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+
+  .donut-center-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: var(--mono);
+  }
+
+  .donut-container { position: relative; width: 200px; height: 200px; }
+
+  /* Answer review */
+  .answers-review {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+    text-align: left;
+  }
+
+  .answer-row {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .answer-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .answer-icon.ok { background: var(--green-dim); }
+  .answer-icon.fail { background: var(--red-dim); }
+
+  .answer-q { font-size: 13px; color: var(--text-dim); margin-bottom: 4px; }
+  .answer-a { font-size: 14px; font-weight: 600; }
+  .answer-a.ok { color: var(--green); }
+  .answer-a.fail { color: var(--red); }
+
+  /* CTA Block */
+  .cta-block {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-alt) 100%);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 48px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--purple), var(--accent));
+  }
+
+  .cta-tag {
+    display: inline-block;
+    background: var(--red-dim);
+    border: 1px solid rgba(247,79,106,0.3);
+    color: var(--red);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    font-family: var(--mono);
+  }
+
+  .cta-headline {
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .cta-sub {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .cta-feature {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--red), #d63060);
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 20px 48px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 0 50px rgba(247,79,106,0.4);
+  }
+
+  .btn-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 80px rgba(247,79,106,0.6);
+  }
+
+  .cta-guarantee {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  .btn-retry {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid var(--border-light);
+    color: var(--text-dim);
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 24px;
+    font-family: var(--sans);
+  }
+
+  .btn-retry:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 48px 0;
+  }
+
+  /* ===== FREE LESSON BLOCK ===== */
+  .free-lesson-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .free-lesson-tag {
+    display: inline-block;
+    background: var(--accent-dim);
+    border: 1px solid rgba(79,142,247,0.3);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    font-family: var(--mono);
+  }
+
+  .free-lesson-title {
+    font-size: clamp(20px, 3.5vw, 28px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .free-lesson-title em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .free-lesson-sub {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0 auto 28px;
+  }
+
+  .video-wrapper {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    background: #000;
+  }
+
+  .video-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  /* ===== GATE SECTION ===== */
+  #gate-section {
+    display: none;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 60px 24px 80px;
+  }
+
+  .gate-container {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .gate-teaser {
+    text-align: center;
+    margin-bottom: 32px;
+    animation: fadeUp 0.4s ease forwards;
+  }
+
+  .gate-lock-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+
+  .gate-teaser-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .gate-teaser-score-preview {
+    font-size: 48px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    filter: blur(8px);
+    user-select: none;
+  }
+
+  .gate-teaser-label {
+    font-size: 16px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .gate-teaser-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  .gate-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+
+  .gate-card-header {
+    padding: 32px 32px 0;
+    text-align: center;
+  }
+
+  .gate-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-dim);
+    border: 1px solid rgba(34,208,110,0.3);
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+    font-family: var(--mono);
+  }
+
+  .gate-title {
+    font-size: clamp(20px, 3.5vw, 26px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .gate-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .gate-form-wrap {
+    padding: 0 32px 32px;
+  }
+
+  .gate-field-group {
+    margin-bottom: 16px;
+  }
+
+  .gate-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    font-family: var(--mono);
+  }
+
+  .gate-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .gate-input:focus {
+    border-color: var(--accent);
+  }
+
+  .gate-input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .gate-btn {
+    width: 100%;
+    margin-top: 8px;
+    background: linear-gradient(135deg, var(--green), #16a34a);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 18px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--sans);
+    box-shadow: 0 0 30px rgba(34,208,110,0.3);
+  }
+
+  .gate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(34,208,110,0.5);
+  }
+
+  .gate-privacy {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-family: var(--mono);
+  }
+
+  .gate-proof {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+
+  /* ===== OVERRIDE ACTIVECAMPAIGN — DARK THEME ===== */
+  #_form_1_ {
+    background: transparent !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--text) !important;
+    border: none !important;
+  }
+  #_form_1_ ._form-title { display: none !important; }
+  #_form_1_ ._html-code p { color: var(--text-dim) !important; font-size: 14px; margin-bottom: 16px; }
+  #_form_1_ ._form-label {
+    color: var(--text-dim) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--mono) !important;
+  }
+  #_form_1_ ._form_element { margin-bottom: 16px !important; }
+  #_form_1_ input[type="text"],
+  #_form_1_ ._form_element input[type="text"],
+  #_form_1_ ._form_element select,
+  #_form_1_ ._form_element textarea:not(.g-recaptcha-response) {
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-top: 1px solid var(--border) !important;
+    border-left: 1px solid var(--border) !important;
+    border-right: 1px solid var(--border) !important;
+    border-bottom: 1px solid var(--border) !important;
+    border-radius: 10px !important;
+    padding: 14px 16px !important;
+    color: var(--text) !important;
+    font-family: var(--sans) !important;
+    font-size: 15px !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  #_form_1_ input[type="text"]::placeholder { color: var(--text-muted) !important; }
+  #_form_1_ input[type="text"]:focus {
+    border-color: var(--accent) !important;
+  }
+  /* Campo de telefone (intl-tel-input) */
+  #_form_1_ .iti {
+    display: block !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+  #_form_1_ .iti input,
+  #_form_1_ .iti input[type="tel"] {
+    display: block !important;
+    width: 100% !important;
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 10px !important;
+    color: var(--text) !important;
+    /* NÃO sobrescrevemos padding-left — o intl-tel-input calcula automaticamente */
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+    padding-right: 16px !important;
+    font-size: 15px !important;
+    box-sizing: border-box !important;
+    height: 50px !important;
+  }
+  #_form_1_ .iti--separate-dial-code .iti__selected-flag {
+    background: var(--surface-alt) !important;
+    border-radius: 8px 0 0 8px !important;
+    border-right: 1px solid var(--border) !important;
+    height: 100% !important;
+    padding: 0 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+  /* Padding extra para acomodar bandeira + "+55" sem cortar o DDD */
+  #_form_1_ .iti--separate-dial-code input[type="tel"],
+  #_form_1_ .iti--separate-dial-code input {
+    padding-left: 110px !important;
+  }
+  #_form_1_ .iti__selected-dial-code { color: var(--text-dim) !important; font-size: 13px !important; }
+  #_form_1_ .iti__flag-container {
+    border-radius: 8px 0 0 8px;
+    overflow: hidden;
+    height: 100% !important;
+  }
+  #_form_1_ .iti__country-list {
+    background: var(--surface-alt) !important;
+    border: 1px solid var(--border-light) !important;
+    border-radius: 8px !important;
+    color: var(--text) !important;
+    z-index: 9999 !important;
+  }
+  #_form_1_ .iti__country:hover { background: var(--border) !important; }
+  #_form_1_ .iti__dial-code { color: var(--text-dim) !important; }
+  /* Botão submit */
+  #_form_1_ ._submit, #_form_1_ button[type="submit"] {
+    width: 100% !important;
+    background: linear-gradient(135deg, var(--green), #16a34a) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 18px !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    color: white !important;
+    cursor: pointer !important;
+    box-shadow: 0 0 30px rgba(34,208,110,0.3) !important;
+    margin-top: 8px !important;
+    transition: all 0.2s !important;
+    font-family: var(--sans) !important;
+  }
+  #_form_1_ ._submit:hover { box-shadow: 0 0 50px rgba(34,208,110,0.5) !important; }
+  /* Mensagem de erro */
+  #_form_1_ ._error-inner {
+    background: var(--red-dim) !important;
+    color: #fca5a5 !important;
+    border-radius: 8px !important;
+    font-size: 12px !important;
+    box-shadow: none !important;
+  }
+  /* Thank-you message */
+  #_form_1_ ._form-thank-you {
+    color: var(--green) !important;
+    font-size: 18px !important;
+    text-align: center;
+    padding: 24px 0;
+  }
+  /* Esconde branding AC (opcional — remova se quiser manter) */
+  #_form_1_ ._form-branding { display: none !important; }
+  #_form_1_ ._html-code { display: none !important; } /* título/desc já estão no gate-card-header */
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .question-card { padding: 24px; }
+    .cta-block { padding: 32px 24px; }
+    .stats-row { gap: 24px; }
+    .stat-number { font-size: 24px; }
+    .gate-card-header { padding: 24px 24px 0; }
+    .gate-form-wrap { padding: 0 24px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero-section">
+  <div class="badge">
+    <span class="badge-dot"></span>
+    Emergências Pediátricas
+  </div>
+
+  <h1>
+    Seu filho convulsionou agora.<br/>
+    O que você <em>realmente</em> faria?
+  </h1>
+
+  <p>
+    9 em cada 10 pais não sabem responder corretamente às situações mais comuns de emergência pediátrica. Descubra onde você está nessa estatística.
+  </p>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <span class="stat-number">87%</span>
+      <span class="stat-label">dos pais erram a questão 3</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">8</span>
+      <span class="stat-label">perguntas baseadas em casos reais</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">3 min</span>
+      <span class="stat-label">para descobrir seu resultado</span>
+    </div>
+  </div>
+
+  <button class="btn-start" onclick="startQuiz()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/>
+    </svg>
+    Começar o Quiz Agora
+  </button>
+
+  <p class="hero-sub">✓ Gratuito · ✓ Sem cadastro · ✓ Resultado imediato</p>
+</section>
+
+<!-- ===== QUIZ ===== -->
+<section id="quiz-section">
+  <div class="quiz-container">
+
+    <!-- Progress -->
+    <div class="progress-header">
+      <span class="progress-label" id="progress-label">Pergunta 1 de 8</span>
+      <span class="progress-score" id="score-label">✓ 0 acertos</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+
+    <!-- Live chart -->
+    <div class="live-chart" id="live-chart" style="display:none">
+      <div class="chart-title">📊 Seu desempenho até agora</div>
+      <div class="chart-bars" id="chart-bars"></div>
+      <div class="chart-info">
+        <span class="chart-legend"><span class="legend-dot" style="background:var(--green)"></span>Acertou</span>
+        <span class="chart-legend"><span class="legend-dot" style="background:var(--red)"></span>Errou</span>
+        <span class="chart-legend"><span class="legend-dot" style="background:var(--border)"></span>Não respondido</span>
+      </div>
+    </div>
+
+    <!-- Question card -->
+    <div class="question-card" id="question-card">
+      <div class="question-num" id="q-num">Pergunta 1 de 8</div>
+      <span class="question-emoji" id="q-emoji">🤒</span>
+      <div class="question-text" id="q-text"></div>
+      <div class="options-grid" id="options-grid"></div>
+      <div class="feedback-box" id="feedback-box">
+        <div class="feedback-title" id="feedback-title"></div>
+        <div id="feedback-body"></div>
+      </div>
+      <button class="btn-next" id="btn-next" onclick="nextQuestion()">
+        Próxima pergunta →
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== GATE (captura de lead antes do resultado) ===== -->
+<section id="gate-section">
+  <div class="gate-container">
+
+    <div class="gate-teaser">
+      <div class="gate-lock-icon">🔒</div>
+      <div class="gate-teaser-bar">
+        <div class="gate-teaser-score-preview" id="gate-score-blur">?/8</div>
+      </div>
+      <div class="gate-teaser-label">Quiz finalizado! Seu resultado está pronto.</div>
+      <div class="gate-teaser-sub">Preencha abaixo para desbloqueá-lo.</div>
+    </div>
+
+    <div class="gate-card">
+      <div class="gate-card-header">
+        <div class="gate-badge">🎯 Resultado personalizado</div>
+        <div class="gate-title">Para onde envio sua pontuação?</div>
+        <p class="gate-sub">Informe seus dados para ver seu resultado completo, a revisão das respostas e receber conteúdos gratuitos sobre emergências pediátricas.</p>
+      </div>
+
+      <div class="gate-form-wrap">
+        <div id="ac-form-embed">
+          <form method="POST" action="https://colab365tool.activehosted.com/proc.php" id="_form_1_" class="_form _form_1 _inline-form _dark" novalidate data-styles-version="5">
+            <input type="hidden" name="u" value="1" />
+            <input type="hidden" name="f" value="1" />
+            <input type="hidden" name="s" />
+            <input type="hidden" name="c" value="0" />
+            <input type="hidden" name="m" value="0" />
+            <input type="hidden" name="act" value="sub" />
+            <input type="hidden" name="v" value="2" />
+            <input type="hidden" name="or" value="9ac83edf-6efc-45b2-afe0-dc60ddc41227" />
+
+            <!-- UTM + QUIZ DATA — preenchidos automaticamente pelo JS -->
+            <input type="hidden" name="field[2]" id="h-quiz-score"     value="" />
+            <input type="hidden" name="field[3]" id="h-quiz-resultado" value="" />
+            <input type="hidden" name="field[4]" id="h-utm-source"     value="" />
+            <input type="hidden" name="field[5]" id="h-utm-medium"     value="" />
+            <input type="hidden" name="field[6]" id="h-utm-campaign"   value="" />
+            <input type="hidden" name="field[7]" id="h-utm-content"    value="" />
+            <input type="hidden" name="field[8]" id="h-utm-id"         value="" />
+            <input type="hidden" name="field[9]" id="h-utm-term"       value="" />
+
+            <div class="_form-content">
+              <div class="_form_element _field_name _full_width">
+                <label for="fullname" class="_form-label">Seu nome<span class="field-required">*</span></label>
+                <div class="_field-wrapper">
+                  <input type="text" id="fullname" name="fullname" placeholder="Ex: Maria Silva" required autocomplete="name" />
+                </div>
+              </div>
+              <div class="_form_element _field_email _full_width">
+                <label for="email" class="_form-label">Melhor e-mail<span class="field-required">*</span></label>
+                <div class="_field-wrapper">
+                  <input type="text" id="email" name="email" placeholder="seu@email.com" required />
+                </div>
+              </div>
+              <div class="_form_element _x13955675 _full_width">
+                <label for="phone" class="_form-label">WhatsApp<span class="field-required">*</span></label>
+                <div class="_field-wrapper">
+                  <input type="text" id="phone" name="phone" placeholder="(11) 99999-9999" required />
+                </div>
+              </div>
+              <div class="_button-wrapper _full_width">
+                <button id="_form_1_submit" class="_submit" type="submit">Ver meu resultado →</button>
+              </div>
+              <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:12px;font-family:var(--mono)">🔒 Seus dados estão seguros. Sem spam.</p>
+              <div class="_clear-element"></div>
+            </div>
+            <div class="_form-thank-you" style="display:none;"></div>
+          </form>
+
+          <script>
+          window.cfields = {"2":"quizscore","3":"quizresultado","4":"utmsource","5":"utmmedium","6":"utmcampaign","7":"utmcontent","8":"utmid","9":"utmterm"};
+          window._show_thank_you = function(id, message, trackcmp_url, email) {
+            var form = document.getElementById('_form_' + id + '_');
+            var thank_you = form.querySelector('._form-thank-you');
+            form.querySelector('._form-content').style.display = 'none';
+            thank_you.innerHTML = '✅ Pronto! Liberando seu resultado...';
+            thank_you.style.display = 'block';
+            const vgoAlias = typeof visitorGlobalObjectAlias === 'undefined' ? 'vgo' : visitorGlobalObjectAlias;
+            var visitorObject = window[vgoAlias];
+            if (email && typeof visitorObject !== 'undefined') { visitorObject('setEmail', email); visitorObject('update'); }
+            else if (typeof trackcmp_url != 'undefined' && trackcmp_url) { _load_script(trackcmp_url); }
+            if (typeof window._form_callback !== 'undefined') window._form_callback(id);
+          };
+          window._show_error = function(id, message, html) {
+            var form = document.getElementById('_form_' + id + '_'),
+                err = document.createElement('div'),
+                button = form.querySelector('button[type="submit"]'),
+                old_error = form.querySelector('._form_error');
+            if (old_error) old_error.parentNode.removeChild(old_error);
+            err.innerHTML = message;
+            err.className = '_error-inner _form_error _no_arrow';
+            var wrapper = document.createElement('div');
+            wrapper.className = '_form-inner _show_be_error';
+            wrapper.appendChild(err);
+            button.parentNode.insertBefore(wrapper, button);
+            var submitButton = form.querySelector('[id^="_form"][id$="_submit"]');
+            submitButton.disabled = false;
+            submitButton.classList.remove('processing');
+            if (html) { var div = document.createElement('div'); div.className = '_error-html'; div.innerHTML = html; err.appendChild(div); }
+          };
+          window._load_script = function(url, callback, isSubmit) {
+            var head = document.querySelector('head'), script = document.createElement('script'), r = false;
+            var submitButton = document.querySelector('#_form_1_submit');
+            script.charset = 'utf-8';
+            script.src = url;
+            if (callback) {
+              script.onload = script.onreadystatechange = function() {
+                if (!r && (!this.readyState || this.readyState == 'complete')) { r = true; callback(); }
+              };
+            }
+            script.onerror = function() {
+              if (isSubmit) { _show_error("1", "Desculpe, seu envio falhou. Tente novamente."); submitButton.disabled = false; submitButton.classList.remove('processing'); }
+            };
+            head.appendChild(script);
+          };
+          (function() {
+            var iti;
+            if (window.location.search.search("excludeform") !== -1) return false;
+            var addEvent = function(element, event, func) {
+              if (element.addEventListener) { element.addEventListener(event, func); }
+              else { var oldFunc = element['on' + event]; element['on' + event] = function() { oldFunc.apply(this, arguments); func.apply(this, arguments); }; }
+            };
+            var _removed = false;
+            var form_to_submit = document.getElementById('_form_1_');
+            var allInputs = form_to_submit.querySelectorAll('input, select, textarea'), tooltips = [], submitted = false;
+            var remove_tooltips = function() { for (var i = 0; i < tooltips.length; i++) { tooltips[i].tip.parentNode.removeChild(tooltips[i].tip); } tooltips = []; };
+            var remove_tooltip = function(elem) { for (var i = 0; i < tooltips.length; i++) { if (tooltips[i].elem === elem) { tooltips[i].tip.parentNode.removeChild(tooltips[i].tip); tooltips.splice(i, 1); return; } } };
+            var create_tooltip = function(elem, text) {
+              var tooltip = document.createElement('div'), arrow = document.createElement('div'), inner = document.createElement('div'), new_tooltip = {};
+              tooltip.id = elem.id + '-error'; tooltip.setAttribute('role', 'alert');
+              if (elem.type != 'radio' && elem.type != 'checkbox') {
+                tooltip.className = '_error'; arrow.className = '_error-arrow'; inner.className = '_error-inner'; inner.innerHTML = text;
+                tooltip.appendChild(arrow); tooltip.appendChild(inner); elem.parentNode.appendChild(tooltip);
+              } else { tooltip.className = '_error-inner _no_arrow'; tooltip.innerHTML = text; elem.parentNode.insertBefore(tooltip, elem); new_tooltip.no_arrow = true; }
+              new_tooltip.tip = tooltip; new_tooltip.elem = elem; tooltips.push(new_tooltip); return new_tooltip;
+            };
+            var resize_tooltip = function(tooltip) {
+              var rect = tooltip.elem.getBoundingClientRect(), doc = document.documentElement,
+                  scrollPosition = rect.top - ((window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0));
+              tooltip.tip.className = tooltip.tip.className.replace(/ ?(_above|_below) ?/g, '') + (scrollPosition < 40 ? ' _below' : ' _above');
+            };
+            var resize_tooltips = function() { if (_removed) return; for (var i = 0; i < tooltips.length; i++) { if (!tooltips[i].no_arrow) resize_tooltip(tooltips[i]); } };
+            var validate_field = function(elem, remove) {
+              var tooltip = null, value = elem.value, no_error = true;
+              remove ? remove_tooltip(elem) : false;
+              elem.removeAttribute('aria-invalid'); elem.removeAttribute('aria-describedby');
+              if (elem.type != 'checkbox') elem.className = elem.className.replace(/ ?_has_error ?/g, '');
+              if (elem.getAttribute('required') !== null) {
+                if (value === undefined || value === null || value === '') {
+                  elem.className = elem.className + ' _has_error'; no_error = false;
+                  tooltip = create_tooltip(elem, "Este campo é obrigatório.");
+                }
+              }
+              if (no_error && elem.name == 'email') {
+                if (!value.match(/^[\+_a-z0-9-'&=]+(\.[\+_a-z0-9-']+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i)) {
+                  elem.className = elem.className + ' _has_error'; no_error = false;
+                  tooltip = create_tooltip(elem, "Digite um e-mail válido.");
+                }
+              }
+              if (no_error && elem.id == 'phone' && elem.value.trim() && typeof iti != 'undefined' && !iti.isValidNumber()) {
+                elem.className = elem.className + ' _has_error'; no_error = false;
+                tooltip = create_tooltip(elem, "Insira um número de telefone válido.");
+              }
+              tooltip ? resize_tooltip(tooltip) : false;
+              if (!no_error && elem.hasAttribute('id')) { elem.setAttribute('aria-invalid', 'true'); elem.setAttribute('aria-describedby', elem.id + '-error'); }
+              return no_error;
+            };
+            var needs_validate = function(el) { return el.getAttribute('required') !== null || ((el.name === 'email' || el.id === 'phone') && el.value !== ""); };
+            var validate_form = function(e) {
+              var no_error = true;
+              if (!submitted) {
+                submitted = true;
+                for (var i = 0, len = allInputs.length; i < len; i++) {
+                  var input = allInputs[i];
+                  if (needs_validate(input)) {
+                    addEvent(input, 'blur', function() { this.value = this.value.trim(); validate_field(this, true); });
+                    addEvent(input, 'input', function() { validate_field(this, true); });
+                  }
+                }
+              }
+              remove_tooltips();
+              for (var i = 0, len = allInputs.length; i < len; i++) {
+                var elem = allInputs[i];
+                if (needs_validate(elem)) { if (elem.tagName.toLowerCase() !== "select") elem.value = elem.value.trim(); validate_field(elem) ? true : no_error = false; }
+              }
+              if (!no_error && e) { e.preventDefault(); }
+              if (!no_error) { var firstErr = form_to_submit.querySelector('._has_error:not([disabled])'); if (firstErr && typeof firstErr.focus === 'function') firstErr.focus(); }
+              resize_tooltips();
+              return no_error;
+            };
+            addEvent(window, 'resize', resize_tooltips);
+            addEvent(window, 'scroll', resize_tooltips);
+
+            /* Inicializa intl-tel-input para campo de telefone */
+            var initializePhoneInput = function(inputPhone) {
+              var style = document.createElement('link'); style.rel = 'stylesheet';
+              style.href = 'https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/css/intlTelInput.css';
+              document.head.appendChild(style);
+              window._load_script('https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/js/intlTelInput.min.js', function() {
+                inputPhone.setAttribute("name", "phone-iti");
+                iti = intlTelInput(inputPhone, {
+                  loadUtils: () => import('https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/js/utils.js'),
+                  hiddenInput: () => ({ phone: 'phone' }),
+                  separateDialCode: true,
+                  autoPlaceholder: 'aggressive',
+                  initialCountry: 'auto',
+                  geoIpLookup: function(success) {
+                    fetch('https://colab365tool.activehosted.com/api/public/geo.php')
+                      .then(function(res) { return res.json(); })
+                      .then(function(data) { success(data.country_code || 'BR'); })
+                      .catch(function() { success('BR'); });
+                  }
+                });
+              }, false);
+            };
+            var inputPhone = form_to_submit.querySelector("#phone");
+            if (inputPhone) initializePhoneInput(inputPhone);
+
+            var _form_serialize = function(form) {
+              if (!form || form.nodeName !== "FORM") return;
+              var i, j, q = [];
+              for (i = 0; i < form.elements.length; i++) {
+                if (form.elements[i].name === "") continue;
+                switch (form.elements[i].nodeName) {
+                  case "INPUT":
+                    switch (form.elements[i].type) {
+                      case "tel": q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].previousSibling ? (form.elements[i].previousSibling.querySelector && form.elements[i].previousSibling.querySelector('div.iti__selected-dial-code') ? form.elements[i].previousSibling.querySelector('div.iti__selected-dial-code').innerText : '') : '') + encodeURIComponent(" ") + encodeURIComponent(form.elements[i].value)); break;
+                      case "text": case "number": case "date": case "time": case "hidden": case "password": case "button": case "reset": case "submit": q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value)); break;
+                      case "checkbox": case "radio": if (form.elements[i].checked) q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value)); break;
+                    }
+                    break;
+                  case "TEXTAREA": q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value)); break;
+                  case "SELECT":
+                    switch (form.elements[i].type) {
+                      case "select-one": q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value)); break;
+                      case "select-multiple": for (j = 0; j < form.elements[i].options.length; j++) { if (form.elements[i].options[j].selected) q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].options[j].value)); } break;
+                    }
+                    break;
+                }
+              }
+              return q.join("&");
+            };
+
+            var form_submit = function(e) {
+              e.preventDefault();
+              if (validate_form(e)) {
+                if (form_to_submit.querySelector('input[name="phone"]') && typeof iti != 'undefined') {
+                  form_to_submit.querySelector('input[name="phone"]').value = iti.getNumber();
+                }
+                var submitButton = e.target.querySelector('#_form_1_submit');
+                submitButton.disabled = true;
+                submitButton.classList.add('processing');
+                var serialized = _form_serialize(document.getElementById('_form_1_')).replace(/%0A/g, '\\n');
+                var err = form_to_submit.querySelector('._form_error');
+                if (err) err.parentNode.removeChild(err);
+
+                // Submete o form AC dentro de iframe invisível
+                // → AC recebe o POST normal, nossa página não navega
+                var iframe = document.getElementById('ac-submit-frame');
+                if (!iframe) {
+                  iframe = document.createElement('iframe');
+                  iframe.id   = 'ac-submit-frame';
+                  iframe.name = 'ac-submit-frame';
+                  iframe.style.display = 'none';
+                  document.body.appendChild(iframe);
+                }
+                form_to_submit.target = 'ac-submit-frame';
+                form_to_submit.submit();
+                form_to_submit.target = '';
+
+                // Feedback visual no card do form
+                var fc = form_to_submit.querySelector('._form-content');
+                var ty = form_to_submit.querySelector('._form-thank-you');
+                if (fc) fc.style.display = 'none';
+                if (ty) { ty.innerHTML = '✅ Pronto! Liberando seu resultado...'; ty.style.display = 'block'; }
+
+                // Envia para Sheets + abre resultado
+                if (typeof sendToSheets === 'function') sendToSheets();
+                setTimeout(showResult, 900);
+              }
+              return false;
+            };
+            addEvent(form_to_submit, 'submit', form_submit);
+          })();
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <div class="gate-proof">👨‍👩‍👧 Mais de 2.400 pais já fizeram este quiz</div>
+
+  </div>
+</section>
+
+<!-- ===== RESULT ===== -->
+<section id="result-section">
+  <div class="result-container">
+
+    <span class="result-emoji" id="result-emoji">🎯</span>
+    <div class="result-score-display" id="result-score" style="color:var(--green)">0</div>
+    <div class="result-score-max">de 8 perguntas corretas</div>
+    <div class="result-title" id="result-title"></div>
+    <p class="result-message" id="result-message"></p>
+
+    <!-- Donut chart -->
+    <div class="donut-wrap">
+      <div class="donut-container">
+        <svg class="donut-svg" width="200" height="200" viewBox="0 0 200 200">
+          <circle class="donut-track" cx="100" cy="100" r="80"/>
+          <circle class="donut-fill" id="donut-fill" cx="100" cy="100" r="80"/>
+        </svg>
+        <div class="donut-center">
+          <div class="donut-center-val" id="donut-pct">0%</div>
+          <div class="donut-center-label">aproveitamento</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Review -->
+    <div style="text-align:left;margin-bottom:16px;">
+      <div style="font-size:16px;font-weight:700;margin-bottom:4px;">📋 Revisão das respostas</div>
+      <div style="font-size:13px;color:var(--text-dim)">Veja onde você acertou e onde errou</div>
+    </div>
+    <div class="answers-review" id="answers-review"></div>
+
+    <div class="divider"></div>
+
+    <!-- AULA GRATUITA -->
+    <div class="free-lesson-block">
+      <div class="free-lesson-tag">🎓 Aula gratuita para você</div>
+      <div class="free-lesson-title">
+        Assista agora: <em>Febre e Convulsão Febril</em>
+      </div>
+      <p class="free-lesson-sub">
+        O Dr. Jesuíno explica tudo o que você precisa saber para agir com calma e segurança quando seu filho tiver febre — sem entrar em pânico e sem cometer os erros mais comuns.
+      </p>
+      <div class="video-wrapper">
+        <video
+          id="free-lesson-video"
+          controls
+          preload="metadata"
+          poster=""
+          style="width:100%;border-radius:12px;display:block;background:#000;"
+        >
+          <source src="AULA 01 – FEBRE E CONVULSÃO FEBRIL.mp4" type="video/mp4" />
+          Seu navegador não suporta vídeo HTML5.
+        </video>
+      </div>
+      <div class="video-meta">
+        <span>🎬 Aula 01 — Febre e Convulsão Febril</span>
+        <span>·</span>
+        <span>Dr. Jesuíno</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CTA -->
+    <div class="cta-block">
+      <div class="cta-tag">🚨 Oportunidade</div>
+      <div class="cta-headline">
+        Você merece estar <em style="color:var(--red);font-style:normal">totalmente preparado</em><br/>
+        para proteger seu filho
+      </div>
+      <p class="cta-sub">
+        O Dr. Jesuíno criou um treinamento prático que ensina pais comuns a agir com calma e precisão nas principais emergências pediátricas — sem precisar de formação médica.
+      </p>
+      <div class="cta-features">
+        <span class="cta-feature">🤒 Febre e Convulsão Febril</span>
+        <span class="cta-feature">🫁 Engasgo (Manobra de Heimlich)</span>
+        <span class="cta-feature">💊 Intoxicação</span>
+        <span class="cta-feature">🤕 Traumatismos e Quedas</span>
+        <span class="cta-feature">🫀 Parada Cardiorrespiratória</span>
+        <span class="cta-feature">+ muito mais</span>
+      </div>
+      <a href="#" class="btn-cta">
+        🛡️ Quero Proteger Meu Filho
+      </a>
+      <p class="cta-guarantee">🔒 Garantia de 7 dias · Acesso imediato · Linguagem acessível</p>
+    </div>
+
+    <button class="btn-retry" onclick="resetQuiz()">
+      ↺ Refazer o quiz
+    </button>
+
+  </div>
+</section>
+
+<script>
+const questions = [
+  {
+    emoji: '🤒',
+    text: 'Seu filho de 2 anos está todo encolhidinho, tremendo e com frio. Você coloca o termômetro e marca 37,8°C. O que está acontecendo?',
+    options: [
+      'A temperatura já está estabilizando, não precisa se preocupar',
+      'A temperatura está subindo — o organismo está tentando combater uma infecção',
+      'Ele está com muito frio, é só agasalhá-lo bem',
+      'O termômetro está com defeito — 37,8° não é febre'
+    ],
+    correct: 1,
+    feedbackOk: '✅ Correto! Quando a criança está encolhida e tremendo, o organismo está *aumentando* a temperatura para combater uma infecção. É o mecanismo de defesa natural do corpo.',
+    feedbackFail: '❌ Na verdade, tremores e "frio" indicam que a temperatura está *subindo*. O organismo está tentando aumentar a temperatura para combater a infecção. Esse é o momento crítico para agir!'
+  },
+  {
+    emoji: '🌡️',
+    text: 'O que realmente causa a convulsão febril nas crianças?',
+    options: [
+      'A temperatura estar acima de 39°C por muito tempo',
+      'A criança ter algum problema neurológico',
+      'A variação rápida da temperatura — não o valor em si',
+      'Febre alta acima de 40°C'
+    ],
+    correct: 2,
+    feedbackOk: '✅ Exato! É a *variação rápida* da temperatura que causa a convulsão febril, não o valor em si. Uma criança pode convulsionar indo de 36° para 37,5° muito rapidamente!',
+    feedbackFail: '❌ Muitos pais pensam assim, mas errado. A convulsão febril é causada pela *variação rápida* da temperatura, não pelo valor alto. Uma criança pode convulsionar com temperatura relativamente baixa se a mudança for abrupta.'
+  },
+  {
+    emoji: '🚿',
+    text: 'Seu filho está todo encolhidinho e tremendo, temperatura subindo. Qual banho você deve dar?',
+    options: [
+      'Banho frio para baixar a febre rapidamente',
+      'Banho gelado com compressa de gelo',
+      'Nenhum banho — só remédio resolve',
+      'Banho morninho para ajudá-lo a equilibrar a temperatura'
+    ],
+    correct: 3,
+    feedbackOk: '✅ Perfeito! O banho morninho faz o corpo fazer vasodilatação, parando de "brigar" para aumentar a temperatura. A criança relaxa, começa a brincar e a febre estabiliza.',
+    feedbackFail: '❌ Banho frio é perigoso nesse momento! O organismo já está tremendo para aumentar a temperatura. O banho frio causa mais vasoconstrição e pode acelerar a subida da febre, aumentando o risco de convulsão. O correto é banho *morninho*.'
+  },
+  {
+    emoji: '🧊',
+    text: 'Para baixar a febre, você decide passar álcool na axila da criança e colocar compressa de gelo. Isso é correto?',
+    options: [
+      'Sim, são técnicas tradicionais muito eficazes',
+      'Só o álcool funciona, o gelo não',
+      'Não — ambas as práticas são prejudiciais e perigosas',
+      'Só para crianças acima de 5 anos'
+    ],
+    correct: 2,
+    feedbackOk: '✅ Correto! O álcool é absorvido pela pele e por inalação, sendo tóxico. O gelo causa vasoconstrição, "prendendo" o calor na cabeça da criança e podendo provocar convulsão. As duas práticas são perigosas.',
+    feedbackFail: '❌ Essas são práticas perigosas que ainda circulam no senso comum! O álcool é absorvido pela pele e inalado, podendo intoxicar a criança. O gelo causa vasoconstrição e pode piorar a febre na cabeça — aumentando risco de convulsão.'
+  },
+  {
+    emoji: '🏃',
+    text: 'Seu filho está com febre de 38,5°C, mas está bem, brincando e tomou remédio. Quando você deve correr para o pronto-socorro?',
+    options: [
+      'Qualquer febre acima de 38°C é emergência — corra imediatamente',
+      'Se a febre não ceder após o banho e o remédio, e ele convulsionar ou piorar muito',
+      'Só se a febre passar de 40°C',
+      'Sempre que há febre em crianças menores de 5 anos'
+    ],
+    correct: 1,
+    feedbackOk: '✅ Correto! Se a criança está ativa, brincando e a febre cede ao tratamento, não é necessário correr ao pronto-socorro. O sinal de alerta real é quando a febre não responde a nenhuma medida e aparecem sinais de piora.',
+    feedbackFail: '❌ Ir ao pronto-socorro por qualquer febre pode ser desnecessário e até prejudicial (expõe a criança a outros vírus). O momento correto é quando a febre *não cede* ao banho e remédio, e surgem outros sinais de alerta como manchas, vômitos ou convulsão.'
+  },
+  {
+    emoji: '💊',
+    text: 'Seu filho está com 39,8°C, suando muito. O banho ideal nesse momento é:',
+    options: [
+      'Banho bem quente para o conforto dele',
+      'Banho morninho igual ao de antes',
+      'Um banho na temperatura ambiente — um pouco mais frio',
+      'Nenhum banho — o suor já está baixando a febre'
+    ],
+    correct: 2,
+    feedbackOk: '✅ Isso! Quando a criança já está suando muito, significa que a temperatura começou a cair. Ela já não vai brigar com a água — pode aceitar um banho um pouco mais frio (temperatura ambiente). O próprio filho vai indicar se a água está boa.',
+    feedbackFail: '❌ Quando a criança já está suando, a temperatura já está *descendo* por conta própria. Nesse caso, ela aceita um banho um pouco mais frio (temperatura ambiente). O banho muito morno poderia manter a temperatura elevada por mais tempo.'
+  },
+  {
+    emoji: '🧠',
+    text: 'A convulsão febril em crianças de 6 meses a 3 anos:',
+    options: [
+      'Causa lesão cerebral permanente — é uma emergência gravíssima',
+      'É um evento benigno que geralmente dura menos de 1 minuto e não traz consequências',
+      'Indica epilepsia e precisa de tratamento imediato',
+      'Só acontece quando a febre está acima de 40°C'
+    ],
+    correct: 1,
+    feedbackOk: '✅ Exato! A convulsão febril benigna geralmente dura menos de 1 minuto e não traz nenhuma consequência para o desenvolvimento da criança. Apesar de assustadora, não causa lesão cerebral.',
+    feedbackFail: '❌ A convulsão febril benigna, comum em crianças de 6 meses a 3 anos, não causa lesão cerebral e geralmente dura menos de 1 minuto. Ela é assustadora para os pais, mas é um evento benigno. Isso não significa ignorar — mas entender que não é catástrofe.'
+  },
+  {
+    emoji: '🚨',
+    text: 'Qual sinal indica que essa febre é algo sério e requer atenção médica urgente?',
+    options: [
+      'Febre acima de 38,5°C em qualquer criança',
+      'A criança estar quietinha e com sono',
+      'A temperatura não ceder ao banho e ao remédio, especialmente se houver outros sinais como manchas ou vômitos',
+      'Febre que dura mais de 6 horas'
+    ],
+    correct: 2,
+    feedbackOk: '✅ Correto! O sinal de alerta real é quando as medidas habituais (banho + remédio) não funcionam. As doenças que afetam o sistema nervoso central fazem temperaturas muito altas que não respondem ao tratamento — e aí é urgência real.',
+    feedbackFail: '❌ O grande sinal de alerta é quando a febre *não responde* ao banho e ao remédio. Doenças graves que afetam o sistema nervoso central costumam causar febre muito alta e resistente ao tratamento. Junto com outros sinais como manchas e vômitos — aí é urgência.'
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answers = [];
+let userAnswers = [];
+
+function startQuiz() {
+  document.getElementById('hero-section').style.display = 'none';
+  document.getElementById('quiz-section').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQuestion];
+  const total = questions.length;
+
+  document.getElementById('progress-label').textContent = `Pergunta ${currentQuestion + 1} de ${total}`;
+  document.getElementById('score-label').textContent = `✓ ${score} acerto${score !== 1 ? 's' : ''}`;
+  document.getElementById('progress-fill').style.width = `${(currentQuestion / total) * 100}%`;
+  document.getElementById('q-num').textContent = `Pergunta ${currentQuestion + 1} de ${total}`;
+  document.getElementById('q-emoji').textContent = q.emoji;
+  document.getElementById('q-text').textContent = q.text;
+
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => handleAnswer(i);
+    grid.appendChild(btn);
+  });
+
+  // Hide feedback & next
+  const fb = document.getElementById('feedback-box');
+  fb.style.display = 'none';
+  fb.className = 'feedback-box';
+  document.getElementById('btn-next').style.display = 'none';
+
+  // Show live chart after 1st question
+  if (currentQuestion > 0) renderLiveChart();
+
+  // Animate card
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = 'fadeUp 0.4s ease forwards';
+}
+
+function handleAnswer(chosen) {
+  const q = questions[currentQuestion];
+  const buttons = document.querySelectorAll('.option-btn');
+  const isCorrect = chosen === q.correct;
+
+  userAnswers.push({ question: q.text, chosen, correct: q.correct, isCorrect, options: q.options });
+
+  if (isCorrect) {
+    score++;
+    buttons[chosen].classList.add('correct');
+  } else {
+    buttons[chosen].classList.add('wrong');
+    buttons[q.correct].classList.add('correct');
+  }
+
+  buttons.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('feedback-box');
+  fb.className = `feedback-box ${isCorrect ? 'correct' : 'wrong'}`;
+  fb.style.display = 'block';
+  document.getElementById('feedback-title').textContent = isCorrect ? '✅ Resposta certa!' : '❌ Resposta errada';
+  document.getElementById('feedback-body').textContent = isCorrect ? q.feedbackOk : q.feedbackFail;
+
+  document.getElementById('score-label').textContent = `✓ ${score} acerto${score !== 1 ? 's' : ''}`;
+  document.getElementById('btn-next').style.display = 'block';
+  document.getElementById('btn-next').textContent =
+    currentQuestion < questions.length - 1 ? 'Próxima pergunta →' : 'Ver meu resultado →';
+
+  // Show live chart
+  document.getElementById('live-chart').style.display = 'block';
+  renderLiveChart();
+}
+
+function renderLiveChart() {
+  const bars = document.getElementById('chart-bars');
+  bars.innerHTML = '';
+  questions.forEach((q, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'chart-bar-wrap';
+    const bar = document.createElement('div');
+    bar.className = 'chart-bar';
+    let color = 'var(--border)';
+    let h = 8;
+    if (i < userAnswers.length) {
+      color = userAnswers[i].isCorrect ? 'var(--green)' : 'var(--red)';
+      h = 20 + Math.random() * 40;
+    }
+    bar.style.background = color;
+    bar.style.height = h + 'px';
+    const label = document.createElement('div');
+    label.className = 'chart-bar-label';
+    label.textContent = `Q${i+1}`;
+    wrap.appendChild(bar);
+    wrap.appendChild(label);
+    bars.appendChild(wrap);
+  });
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion >= questions.length) {
+    showGate();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-section').style.display = 'none';
+  document.getElementById('gate-section').style.display = 'none';
+  document.getElementById('result-section').style.display = 'block';
+  window.scrollTo(0, 0);
+
+  const pct = Math.round((score / questions.length) * 100);
+  const scoreEl = document.getElementById('result-score');
+  const titleEl = document.getElementById('result-title');
+  const msgEl = document.getElementById('result-message');
+  const emojiEl = document.getElementById('result-emoji');
+
+  // Animate score count
+  let count = 0;
+  const interval = setInterval(() => {
+    scoreEl.textContent = count;
+    if (count >= score) clearInterval(interval);
+    count++;
+  }, 150);
+
+  // Color & message by score
+  if (score <= 2) {
+    scoreEl.style.color = 'var(--red)';
+    emojiEl.textContent = '😨';
+    titleEl.innerHTML = 'Atenção: você não está preparado para uma emergência real';
+    msgEl.textContent = `Você acertou apenas ${score} de 8 perguntas. Isso significa que em uma situação real de emergência, suas chances de agir corretamente são muito baixas. Mas calma — isso tem solução, e você acabou de dar o primeiro passo ao tomar esse quiz.`;
+  } else if (score <= 4) {
+    scoreEl.style.color = 'var(--amber)';
+    emojiEl.textContent = '😬';
+    titleEl.innerHTML = 'Você tem algum conhecimento, mas ainda há lacunas perigosas';
+    msgEl.textContent = `${score} de 8 — você está na média dos pais. Conhecimento parcial pode ser arriscado: você agiria corretamente em algumas situações, mas em outras poderia piorar o quadro sem saber.`;
+  } else if (score <= 6) {
+    scoreEl.style.color = 'var(--accent)';
+    emojiEl.textContent = '🙂';
+    titleEl.innerHTML = 'Bom conhecimento! Mas ainda há pontos que podem pegar você de surpresa';
+    msgEl.textContent = `${score} de 8 — você está acima da média! Com um pouco mais de preparo, você estaria pronto para agir com total confiança em qualquer emergência pediátrica.`;
+  } else {
+    scoreEl.style.color = 'var(--green)';
+    emojiEl.textContent = '🏆';
+    titleEl.innerHTML = 'Parabéns! Você está bem preparado';
+    msgEl.textContent = `${score} de 8 — excelente! Você demonstra um conhecimento acima da média sobre emergências pediátricas. Mas sempre há mais para aprender e consolidar esse conhecimento com orientação médica.`;
+  }
+
+  // Donut chart
+  setTimeout(() => {
+    const circumference = 2 * Math.PI * 80;
+    const offset = circumference - (pct / 100) * circumference;
+    const fill = document.getElementById('donut-fill');
+    const colors = pct < 37 ? 'var(--red)' : pct < 62 ? 'var(--amber)' : 'var(--green)';
+    fill.style.stroke = colors;
+    fill.style.strokeDashoffset = offset;
+    document.getElementById('donut-pct').textContent = pct + '%';
+    document.getElementById('donut-pct').style.color = colors;
+  }, 300);
+
+  // Answers review
+  const review = document.getElementById('answers-review');
+  review.innerHTML = '';
+  userAnswers.forEach((ua, i) => {
+    const row = document.createElement('div');
+    row.className = 'answer-row';
+    row.style.animationDelay = `${i * 0.06}s`;
+    row.innerHTML = `
+      <div class="answer-icon ${ua.isCorrect ? 'ok' : 'fail'}">${ua.isCorrect ? '✓' : '✗'}</div>
+      <div>
+        <div class="answer-q">Pergunta ${i + 1}: ${ua.question.substring(0, 80)}...</div>
+        <div class="answer-a ${ua.isCorrect ? 'ok' : 'fail'}">
+          ${ua.isCorrect ? '✅ ' : '❌ Você: "' + ua.options[ua.chosen].substring(0, 55) + '..."'}
+          ${!ua.isCorrect ? '<br><span style="color:var(--green);font-size:13px">✅ Correto: "' + ua.options[ua.correct].substring(0, 55) + '..."</span>' : ua.options[ua.chosen].substring(0, 65)}
+        </div>
+      </div>
+    `;
+    review.appendChild(row);
+  });
+}
+
+function resetQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  userAnswers = [];
+  document.getElementById('result-section').style.display = 'none';
+  document.getElementById('gate-section').style.display = 'none';
+  document.getElementById('live-chart').style.display = 'none';
+  document.getElementById('quiz-section').style.display = 'block';
+  window.scrollTo(0, 0);
+  renderQuestion();
+}
+
+/* ═══════════════════════════════════════════
+   UTM CAPTURE & PERSISTENCE
+═══════════════════════════════════════════ */
+function captureUTMs() {
+  const p = new URLSearchParams(window.location.search);
+  const map = {
+    utm_source:   p.get('utm_source')   || '',
+    utm_medium:   p.get('utm_medium')   || '',
+    utm_campaign: p.get('utm_campaign') || '',
+    utm_content:  p.get('utm_content')  || '',
+    utm_term:     p.get('utm_term')     || '',
+    utm_id:       p.get('utm_id') || p.get('gclid') || p.get('fbclid') || '',
+  };
+  // Persiste na sessão — sobrevive à navegação interna, não ao fechar aba
+  Object.entries(map).forEach(([k, v]) => { if (v) sessionStorage.setItem('_quiz_' + k, v); });
+  return map;
+}
+
+function getStoredUTMs() {
+  const keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_id'];
+  const out = {};
+  keys.forEach(k => { out[k] = sessionStorage.getItem('_quiz_' + k) || ''; });
+  return out;
+}
+
+/* ═══════════════════════════════════════════
+   QUIZ RESULT LABEL
+═══════════════════════════════════════════ */
+function getResultLabel() {
+  if (score <= 2) return 'Não preparado';
+  if (score <= 4) return 'Conhecimento parcial';
+  if (score <= 6) return 'Bom conhecimento';
+  return 'Bem preparado';
+}
+
+/* ═══════════════════════════════════════════
+   GATE SCREEN
+═══════════════════════════════════════════ */
+function showGate() {
+  document.getElementById('quiz-section').style.display = 'none';
+  document.getElementById('gate-section').style.display = 'block';
+  window.scrollTo(0, 0);
+
+  // Preenche campos hidden do formulário nativo
+  const utms = getStoredUTMs();
+  const fill = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+  fill('h-utm-source',     utms.utm_source);
+  fill('h-utm-medium',     utms.utm_medium);
+  fill('h-utm-campaign',   utms.utm_campaign);
+  fill('h-utm-content',    utms.utm_content);
+  fill('h-utm-term',       utms.utm_term);
+  fill('h-utm-id',         utms.utm_id);
+  fill('h-quiz-score',     score + '/' + questions.length);
+  fill('h-quiz-resultado', getResultLabel());
+
+  // Preenche campos do form do ActiveCampaign (se já estiver no DOM)
+  injectACFields();
+
+  // Observa o form do AC aparecer de forma assíncrona e preenche assim que carregar
+  watchACFormLoad();
+
+  // Observa o sucesso do submit do AC e libera o resultado
+  watchACFormSuccess();
+
+  // Máscara de telefone no campo nativo
+  const phone = document.getElementById('g-phone');
+  if (phone) phone.addEventListener('input', maskPhone);
+}
+
+/* ═══════════════════════════════════════════
+   ACTIVECAMPAIGN — INJEÇÃO DE CAMPOS HIDDEN
+
+   Para cada campo custom criado no AC, o JS
+   tenta preencher pelo padrão de name que o AC
+   gera automaticamente: field[CHAVE,0]
+   Exemplo: utm_source → field[UTM_SOURCE,0]
+
+   Se usar nome direto (utm_source), também cobre.
+═══════════════════════════════════════════ */
+function injectACFields() {
+  const embed = document.getElementById('ac-form-embed');
+  if (!embed) return;
+
+  const utms = getStoredUTMs();
+  const data = {
+    utm_source:     utms.utm_source,
+    utm_medium:     utms.utm_medium,
+    utm_campaign:   utms.utm_campaign,
+    utm_content:    utms.utm_content,
+    utm_term:       utms.utm_term,
+    utm_id:         utms.utm_id,
+    quiz_score:     score + '/' + questions.length,
+    quiz_resultado: getResultLabel(),
+  };
+
+  Object.entries(data).forEach(([key, val]) => {
+    if (!val) return;
+    // Tenta name exato
+    embed.querySelectorAll(`input[name="${key}"]`).forEach(el => { el.value = val; });
+    // Tenta padrão AC: field[CHAVE,0] e field[CHAVE]
+    embed.querySelectorAll(`input[name*="${key}"]`).forEach(el => { el.value = val; });
+    // Tenta uppercase (padrão de alguns setups AC)
+    embed.querySelectorAll(`input[name*="${key.toUpperCase()}"]`).forEach(el => { el.value = val; });
+  });
+}
+
+/* Observa o embed do AC carregar de forma assíncrona */
+function watchACFormLoad() {
+  const embed = document.getElementById('ac-form-embed');
+  if (!embed) return;
+  if (embed.querySelector('form')) { injectACFields(); return; } // já carregou
+
+  const obs = new MutationObserver(() => {
+    if (embed.querySelector('form')) {
+      injectACFields();
+      obs.disconnect();
+    }
+  });
+  obs.observe(embed, { childList: true, subtree: true });
+}
+
+/* Detecta sucesso do submit do AC e exibe o resultado */
+function watchACFormSuccess() {
+  const embed = document.getElementById('ac-form-embed');
+  if (!embed) return;
+  // Se só tem formulário nativo, não precisa observar
+  if (embed.querySelector('#native-gate-form')) return;
+
+  // Intercepta o submit do form do AC
+  const form = embed.querySelector('form');
+  if (form) {
+    form.addEventListener('submit', () => {
+      // AC processa e mostra mensagem de sucesso; aguardamos antes de redirecionar
+      setTimeout(showResult, 2500);
+    }, { once: true });
+  }
+
+  // MutationObserver como fallback — detecta quando AC exibe a div de agradecimento
+  const obs = new MutationObserver(() => {
+    const thanks = embed.querySelector('._form-thank-you, [class*="thank-you"], [class*="success-message"]');
+    if (thanks && getComputedStyle(thanks).display !== 'none') {
+      obs.disconnect();
+      setTimeout(showResult, 600);
+    }
+  });
+  obs.observe(embed, { childList: true, subtree: true, attributes: true, attributeFilter: ['style','class'] });
+}
+
+/* ═══════════════════════════════════════════
+   SUBMIT DO FORMULÁRIO NATIVO
+   (usado enquanto o embed do AC não é colado)
+═══════════════════════════════════════════ */
+function handleNativeSubmit(e) {
+  e.preventDefault();
+  const name  = document.getElementById('g-name');
+  const email = document.getElementById('g-email');
+
+  if (!name.value.trim()) { name.focus(); name.style.borderColor = 'var(--red)'; return; }
+  if (!email.value.includes('@')) { email.focus(); email.style.borderColor = 'var(--red)'; return; }
+
+  // Salva na sessão para debug / análise
+  sessionStorage.setItem('_quiz_lead_name',  name.value.trim());
+  sessionStorage.setItem('_quiz_lead_email', email.value.trim());
+  const phone = document.getElementById('g-phone');
+  if (phone) sessionStorage.setItem('_quiz_lead_phone', phone.value.trim());
+
+  showResult();
+}
+
+/* ═══════════════════════════════════════════
+   MÁSCARA DE TELEFONE
+═══════════════════════════════════════════ */
+function maskPhone(e) {
+  let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+  if (v.length > 2)  v = '(' + v.slice(0,2) + ') ' + v.slice(2);
+  if (v.length > 10) v = v.slice(0,10) + '-' + v.slice(10);
+  e.target.value = v;
+}
+
+/* ═══════════════════════════════════════════
+   GOOGLE SHEETS WEBHOOK
+   Envia os dados do lead para a planilha
+   "# JRF Planilha-Jarvis" → aba "QUIZ MEP"
+═══════════════════════════════════════════ */
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwwMvDzVnr-z7OkiqtmJGXEVz8eHfcdVfFi9vI8YPgfiC33QLOG1D6atM6i6rMKMOYDyw/exec';
+
+function sendToSheets() {
+  const form = document.getElementById('_form_1_');
+  if (!form) return;
+
+  const get = (sel) => { const el = form.querySelector(sel); return el ? el.value.trim() : ''; };
+
+  const payload = {
+    fullname:       get('[name="fullname"]'),
+    email:          get('[name="email"]'),
+    // intl-tel-input cria um hidden[name="phone"] com o número completo
+    phone:          get('[name="phone"]') || get('[name="phone-iti"]'),
+    quiz_score:     get('#h-quiz-score'),
+    quiz_resultado: get('#h-quiz-resultado'),
+    utm_source:     get('#h-utm-source'),
+    utm_medium:     get('#h-utm-medium'),
+    utm_campaign:   get('#h-utm-campaign'),
+    utm_content:    get('#h-utm-content'),
+    utm_id:         get('#h-utm-id'),
+    utm_term:       get('#h-utm-term'),
+  };
+
+  // GET via <script> tag — funciona em file:// e ignora CORS
+  var params = new URLSearchParams();
+  Object.entries(payload).forEach(function(kv) { params.set(kv[0], kv[1] || ''); });
+  var tag = document.createElement('script');
+  tag.src = SHEETS_URL + '?' + params.toString();
+  document.head.appendChild(tag);
+  setTimeout(function() { if (tag.parentNode) tag.parentNode.removeChild(tag); }, 8000);
+}
+
+/* ═══════════════════════════════════════════
+   HOOK ACTIVECAMPAIGN
+   O AC chama window._form_callback(id) ao
+   final de _show_thank_you (submit OK).
+   Disparamos Sheets + resultado juntos.
+═══════════════════════════════════════════ */
+window._form_callback = function() {
+  sendToSheets();        // → planilha
+  setTimeout(showResult, 900); // → resultado do quiz
+};
+
+/* ═══════════════════════════════════════════
+   INIT — captura UTMs assim que a página abre
+═══════════════════════════════════════════ */
+captureUTMs();
+</script>
+</body>
+</html>

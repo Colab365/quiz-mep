@@ -1,0 +1,12 @@
+# Video — muito grande para o GitHub (1GB). Hospedar no YouTube.
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# Transcrição interna
+#transcrição-ep-aula1-.md
+
+# Sistema
+.DS_Store
+Thumbs.db
