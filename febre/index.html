@@ -2167,5 +2167,36 @@ window._form_callback = function() {
 ═══════════════════════════════════════════ */
 captureUTMs();
 </script>
+
+<!-- Hotmart UTM tracking -->
+<script>
+(function (){
+
+  var links = document.querySelectorAll('a[href*="pay.hotmart.com"]');
+  var original = "";
+  var track = "";
+  var novoLink = ""
+  var arrURL = [];
+  var rastreio = "sck={{utm_source}}|{{utm_medium}}|{{utm_campaign}}|{{utm_content}}|{{utm_term}}&utm_source={{utm_source}}&utm_medium={{utm_medium}}&utm_campaign={{utm_campaign}}&utm_content={{utm_content}}&utm_term={{utm_term}}"
+
+
+    for( var i = 0; i < links.length; i++){
+      console.log(1);
+      original = links[i].getAttribute("href");
+      track = rastreio;
+      arrURL = original.split('?');
+
+      if(arrURL.length == 1){
+        novoLink = original + "?" + track;
+      }
+      else {
+        novoLink = arrURL[0] + "?" + track + "&" + arrURL[1];
+      }
+
+      links[i].setAttribute("href", novoLink)
+    }
+
+})();
+</script>
 </body>
 </html>
