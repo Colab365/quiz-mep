@@ -1846,7 +1846,10 @@ function loadVturb() {
   document.head.appendChild(s);
 }
 
+var _resultShown = false;
 function showResult() {
+  if (_resultShown) return; // evita duplo disparo
+  _resultShown = true;
   document.getElementById('quiz-section').style.display = 'none';
   document.getElementById('gate-section').style.display = 'none';
   document.getElementById('result-section').style.display = 'block';
@@ -1924,6 +1927,7 @@ function showResult() {
 }
 
 function resetQuiz() {
+  _resultShown = false;
   currentQuestion = 0;
   score = 0;
   userAnswers = [];
@@ -1996,9 +2000,6 @@ function showGate() {
   // Observa o form do AC aparecer de forma assíncrona e preenche assim que carregar
   watchACFormLoad();
 
-  // Observa o sucesso do submit do AC e libera o resultado
-  watchACFormSuccess();
-
   // Máscara de telefone no campo nativo
   const phone = document.getElementById('g-phone');
   if (phone) phone.addEventListener('input', maskPhone);
@@ -2056,32 +2057,9 @@ function watchACFormLoad() {
   obs.observe(embed, { childList: true, subtree: true });
 }
 
-/* Detecta sucesso do submit do AC e exibe o resultado */
-function watchACFormSuccess() {
-  const embed = document.getElementById('ac-form-embed');
-  if (!embed) return;
-  // Se só tem formulário nativo, não precisa observar
-  if (embed.querySelector('#native-gate-form')) return;
-
-  // Intercepta o submit do form do AC
-  const form = embed.querySelector('form');
-  if (form) {
-    form.addEventListener('submit', () => {
-      // AC processa e mostra mensagem de sucesso; aguardamos antes de redirecionar
-      setTimeout(showResult, 2500);
-    }, { once: true });
-  }
-
-  // MutationObserver como fallback — detecta quando AC exibe a div de agradecimento
-  const obs = new MutationObserver(() => {
-    const thanks = embed.querySelector('._form-thank-you, [class*="thank-you"], [class*="success-message"]');
-    if (thanks && getComputedStyle(thanks).display !== 'none') {
-      obs.disconnect();
-      setTimeout(showResult, 600);
-    }
-  });
-  obs.observe(embed, { childList: true, subtree: true, attributes: true, attributeFilter: ['style','class'] });
-}
+/* watchACFormSuccess removida — o submit handler inline (iframe trick) já
+   chama sendToSheets() + showResult() após 900ms. O MutationObserver
+   causava disparo prematuro durante a inicialização do AC. */
 
 /* ═══════════════════════════════════════════
    SUBMIT DO FORMULÁRIO NATIVO
