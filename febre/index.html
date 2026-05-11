@@ -2146,34 +2146,42 @@ window._form_callback = function() {
 captureUTMs();
 </script>
 
-<!-- Hotmart UTM tracking -->
+<!-- Hotmart UTM tracking — lê UTMs da URL real e injeta nos links do checkout -->
 <script>
-(function (){
+(function () {
+  // Lê UTMs da URL atual (sessionStorage como fallback para SPAs)
+  var p = new URLSearchParams(window.location.search);
+  function getUTM(key) {
+    return p.get(key) || sessionStorage.getItem('_quiz_' + key) || '';
+  }
+
+  var src      = getUTM('utm_source');
+  var medium   = getUTM('utm_medium');
+  var campaign = getUTM('utm_campaign');
+  var content  = getUTM('utm_content');
+  var term     = getUTM('utm_term');
+
+  // Só adiciona rastreio se houver pelo menos utm_source
+  if (!src) return;
+
+  var sck = [src, medium, campaign, content, term].join('|');
+  var extra = 'sck=' + encodeURIComponent(sck)
+    + '&utm_source='   + encodeURIComponent(src)
+    + '&utm_medium='   + encodeURIComponent(medium)
+    + '&utm_campaign=' + encodeURIComponent(campaign)
+    + '&utm_content='  + encodeURIComponent(content)
+    + '&utm_term='     + encodeURIComponent(term);
 
   var links = document.querySelectorAll('a[href*="pay.hotmart.com"]');
-  var original = "";
-  var track = "";
-  var novoLink = ""
-  var arrURL = [];
-  var rastreio = "sck={{utm_source}}|{{utm_medium}}|{{utm_campaign}}|{{utm_content}}|{{utm_term}}&utm_source={{utm_source}}&utm_medium={{utm_medium}}&utm_campaign={{utm_campaign}}&utm_content={{utm_content}}&utm_term={{utm_term}}"
-
-
-    for( var i = 0; i < links.length; i++){
-      console.log(1);
-      original = links[i].getAttribute("href");
-      track = rastreio;
-      arrURL = original.split('?');
-
-      if(arrURL.length == 1){
-        novoLink = original + "?" + track;
-      }
-      else {
-        novoLink = arrURL[0] + "?" + track + "&" + arrURL[1];
-      }
-
-      links[i].setAttribute("href", novoLink)
-    }
-
+  for (var i = 0; i < links.length; i++) {
+    var original = links[i].getAttribute('href');
+    var arrURL   = original.split('?');
+    links[i].setAttribute('href',
+      arrURL.length === 1
+        ? original + '?' + extra
+        : arrURL[0] + '?' + extra + '&' + arrURL[1]
+    );
+  }
 })();
 </script>
 </body>
