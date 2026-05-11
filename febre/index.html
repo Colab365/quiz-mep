@@ -1483,21 +1483,24 @@
                 var err = form_to_submit.querySelector('._form_error');
                 if (err) err.parentNode.removeChild(err);
 
-                // Submete o form AC dentro de iframe invisível
-                // → AC recebe o POST normal, nossa página não navega
-                var iframe = document.getElementById('ac-submit-frame');
-                if (!iframe) {
-                  iframe = document.createElement('iframe');
-                  iframe.id   = 'ac-submit-frame';
-                  iframe.name = 'ac-submit-frame';
-                  iframe.style.display = 'none';
-                  document.body.appendChild(iframe);
-                }
-                form_to_submit.target = 'ac-submit-frame';
-                form_to_submit.submit();
-                form_to_submit.target = '';
+                // Coleta todos os campos do form (incluindo hidden UTMs + quiz score)
+                var formData = new FormData(form_to_submit);
 
-                // Feedback visual no card do form
+                // Garante que o telefone com DDD internacional vai no payload
+                if (typeof iti !== 'undefined') {
+                  formData.set('phone', iti.getNumber());
+                }
+
+                // POST para o ActiveCampaign via fetch no-cors
+                // (no-cors = POST simples, sem preflight, dados chegam no servidor)
+                fetch(form_to_submit.getAttribute('action'), {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                  body: new URLSearchParams(formData).toString(),
+                  mode: 'no-cors'
+                }).catch(function() {});
+
+                // Feedback visual
                 var fc = form_to_submit.querySelector('._form-content');
                 var ty = form_to_submit.querySelector('._form-thank-you');
                 if (fc) fc.style.display = 'none';
