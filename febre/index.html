@@ -1566,13 +1566,9 @@
         O Dr. Jesuíno explica tudo o que você precisa saber para agir com calma e segurança quando seu filho tiver febre — sem entrar em pânico e sem cometer os erros mais comuns.
       </p>
       <div class="video-wrapper">
-        <vturb-smartplayer id="vid-6a0251197ded961d3694a844" style="display:block;margin:0 auto;width:100%;"></vturb-smartplayer>
-        <script type="text/javascript">
-          var s=document.createElement("script");
-          s.src="https://scripts.converteai.net/6301daf4-76f4-41a7-8338-963f0fb32580/players/6a0251197ded961d3694a844/v4/player.js";
-          s.async=!0;
-          document.head.appendChild(s);
-        </script>
+        <div id="vturb-placeholder" style="width:100%;min-height:200px;display:flex;align-items:center;justify-content:center;">
+          <span style="color:var(--text-muted);font-size:14px;">Carregando vídeo...</span>
+        </div>
       </div>
       <div class="video-meta">
         <span>🎬 Aula 01 — Febre e Convulsão Febril</span>
@@ -1839,11 +1835,23 @@ function nextQuestion() {
   }
 }
 
+function loadVturb() {
+  var placeholder = document.getElementById('vturb-placeholder');
+  if (!placeholder || placeholder.dataset.loaded) return;
+  placeholder.dataset.loaded = '1';
+  placeholder.innerHTML = '<vturb-smartplayer id="vid-6a0251197ded961d3694a844" style="display:block;margin:0 auto;width:100%;"></vturb-smartplayer>';
+  var s = document.createElement('script');
+  s.src = 'https://scripts.converteai.net/6301daf4-76f4-41a7-8338-963f0fb32580/players/6a0251197ded961d3694a844/v4/player.js';
+  s.async = true;
+  document.head.appendChild(s);
+}
+
 function showResult() {
   document.getElementById('quiz-section').style.display = 'none';
   document.getElementById('gate-section').style.display = 'none';
   document.getElementById('result-section').style.display = 'block';
   window.scrollTo(0, 0);
+  loadVturb();
 
   const pct = Math.round((score / questions.length) * 100);
   const scoreEl = document.getElementById('result-score');
